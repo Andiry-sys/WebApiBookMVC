@@ -17,14 +17,27 @@ namespace WebApiBookMVC.Controllers
         }
 
         // GET: Books
-        public async Task<IActionResult> Index(string bookGenre,string searchString)
+        public async Task<IActionResult> Index(string bookGenre,string searchString,string sortString)
         {
+            ViewData["DateSortParm"] = sortString == "Date" ? "date_desc" : "Date";
             // Use LINQ to get list of genres.
             IQueryable<string> genreQuery = from m in _context.Book
                                             orderby m.Genre
                                             select m.Genre;
             var books = from m in _context.Book
                          select m;
+
+            switch (sortString)
+            {
+                case "Date":
+                books = books.OrderBy(s => s.PublishDate);
+                break;
+                case "date_desc":
+                books = books.OrderByDescending(s => s.PublishDate);
+                break;
+            }
+
+
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -35,6 +48,8 @@ namespace WebApiBookMVC.Controllers
             {
                 books = books.Where(x => x.Genre == bookGenre);
             }
+
+
 
             var bookGenreVM = new BookGenreViewModel
             {

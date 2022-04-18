@@ -17,7 +17,9 @@
         </select>
         
         Title: <input type="text" name="SearchString" />
-        <input type="submit" value="Filter" />
+        <input type="submit" value="Search" />       
+        <a asp-action="Index">Back to Full List</a>
+        
     </p>
 </form>
 <table class="table">
@@ -36,7 +38,7 @@
                 @Html.DisplayNameFor(model => model.Books[0].Publisher)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Books[0].PublishDate)
+                <a asp-action="Index" asp-route-sortString="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.PublishDate)</a>
             </th>
             <th></th>
         </tr>

@@ -8,5 +8,6 @@ namespace WebApiBookMVC.Models
         public SelectList Genres { get; set; }
         public string BookeGenre { get; set; }
         public string SearchString { get; set; }
+        public DateTime PublishDate { get; set; }
     }
 }
